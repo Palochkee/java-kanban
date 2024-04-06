@@ -1,19 +1,18 @@
 package models;
 
-import util.Status;
-
 import java.util.Objects;
 
 public class Task {
-    private int id;
     private String name;
     private String description;
-    private Status status;
+    protected Status status;
+    protected int id;
 
-    public Task(String name, String description, Status status) {
+    public Task(String name, String description, Status status, int id) {
         this.name = name;
         this.description = description;
         this.status = status;
+        this.id = id;
     }
 
     public int getId() {
@@ -64,10 +63,10 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                "id=" + id +
                 '}';
     }
 }

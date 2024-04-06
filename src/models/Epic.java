@@ -1,33 +1,33 @@
 package models;
 
-import util.Status;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
 
-    private List<Subtask> subtasks = new ArrayList<>();
+    private final List<Integer> subTasksIds;
 
-    public Epic(String name, String description) {
-        super(name, description, Status.NEW);
+    public Epic(String name, String description, Status status, int id) {
+        super(name, description, status, id);
+        this.subTasksIds = new ArrayList<>();
     }
-
-    public List<Subtask> getSubtasks() {
-        return subtasks;
+    public List<Integer> getSubTasksIds() {
+        return subTasksIds;
     }
-
-    public void addSubtask(Subtask subtasks) {
-        this.subtasks.add(subtasks);
+    public void addSubTasksIds(int subTaskId) {
+        subTasksIds.add(subTaskId);
+    }
+    public void updateStatus() {
+        status = Status.NEW;
     }
 
     @Override
     public String toString() {
-        return "Epic{" +
-                "id=" + super.getId() +
+        return "Subtask{" +
                 ", name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +
                 ", status=" + super.getStatus() +
+                "id=" + super.getId() +
                 '}';
     }
 }
