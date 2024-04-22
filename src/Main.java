@@ -2,32 +2,33 @@ import models.Epic;
 import models.Status;
 import models.Task;
 import models.SubTask;
+import service.Managers;
 import service.TaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Трекер задач на каждый день!");
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
-        Task task1 = new Task("Работа", "Сходить на работу", Status.NEW, 0);
-        Task task2 = new Task("Семья", "Уделить время семье", Status.NEW, 0);
+        Task task1 = new Task("Работа", "Сходить на работу");
+        Task task2 = new Task("Семья", "Уделить время семье");
         taskManager.createTask(task1);
         taskManager.createTask(task2);
 
         Epic epic1 = new Epic("Гардероб", "Выбрать что одеть", Status.NEW, 0);
         taskManager.createEpic(epic1);
         SubTask subTask1 = new SubTask("Одеть костюм", "Пойти на работу", Status.NEW, 0, epic1.getId());
-        taskManager.createSubtask(subTask1);
+        taskManager.createSubTask(subTask1);
         SubTask subTask2 = new SubTask("Одеть треники", "Остаться дома", Status.NEW, 0, epic1.getId());
-        taskManager.createSubtask(subTask2);
+        taskManager.createSubTask(subTask2);
 
         Epic epic2 = new Epic("Питание", "Приготовить поесть", Status.NEW, 0);
         taskManager.createEpic(epic2);
         SubTask subTask3 = new SubTask("Приготовить поесть", "Выбрать, что приготовить", Status.NEW, 0, epic2.getId());
-        taskManager.createSubtask(subTask3);
+        taskManager.createSubTask(subTask3);
         SubTask subTask4 = new SubTask("Пойти голодным", "Поесть на работа", Status.NEW, 0, epic2.getId());
-        taskManager.createSubtask(subTask4);
+        taskManager.createSubTask(subTask4);
 
         System.out.println("\nСписок эпиков:");
         for (Epic epic : taskManager.getEpicList()) {

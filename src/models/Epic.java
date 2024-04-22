@@ -1,7 +1,9 @@
 package models;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Epic extends Task {
 
@@ -11,17 +13,31 @@ public class Epic extends Task {
         super(name, description, status, id);
         this.subTasksIds = new ArrayList<>();
     }
-    public List<Integer> getSubTasksIds() {
-        return subTasksIds;
+    public Epic(String name, String description) {
+        super(name, description, Status.NEW);
+        this.subTasksIds = new ArrayList<>();
     }
+    public Epic(String name, String description, int id) {
+        super(name, description);
+        setId(id);
+        this.subTasksIds = new ArrayList<>();
+    }
+
     public void addSubTasksIds(int subTaskId) {
         subTasksIds.add(subTaskId);
     }
+
+    public List<Integer> getSubTasksIds() {
+        return subTasksIds;
+    }
+    public void removeSubtaskIds(Integer subtask) {
+        subTasksIds.remove(subtask);
+    }
+
     public void updateStatus() {
         status = Status.NEW;
     }
 
-    @Override
     public String toString() {
         return "Subtask{" +
                 ", name='" + super.getName() + '\'' +
@@ -30,4 +46,8 @@ public class Epic extends Task {
                 "id=" + super.getId() +
                 '}';
     }
+
 }
+
+
+
