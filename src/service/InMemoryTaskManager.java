@@ -12,9 +12,9 @@ import java.util.Map;
 
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasksMap; // интерфейс Map
-    private final Map<Integer, SubTask> subTasksMap; // интерфейс Map
-    private final Map<Integer, Epic> epicsMap; // интерфейс Map
+    private final Map<Integer, Task> tasksMap;
+    private final Map<Integer, SubTask> subTasksMap;
+    private final Map<Integer, Epic> epicsMap;
     private int counter = 0;
     private final HistoryManager historyManager;
 
@@ -89,7 +89,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void createTask(Task task) { // унифицировал все методы создания
+    public void createTask(Task task) {
         int taskId = generateCounter();
         task.setId(taskId);
         tasksMap.put(task.getId(), task);
