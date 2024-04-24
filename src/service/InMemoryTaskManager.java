@@ -10,11 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasksMap;
-    private final Map<Integer, SubTask> subTasksMap;
-    private final Map<Integer, Epic> epicsMap;
+    private final Map<Integer, Task> tasksMap; // интерфейс Map
+    private final Map<Integer, SubTask> subTasksMap; // интерфейс Map
+    private final Map<Integer, Epic> epicsMap; // интерфейс Map
     private int counter = 0;
     private final HistoryManager historyManager;
 
@@ -77,7 +76,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeSubTaskId(int subTaskId) { // исправил логику перерасчета статуса соответствующего эпика
+    public void removeSubTaskId(int subTaskId) {
         SubTask removeSubTask = subTasksMap.remove(subTaskId);
         if (removeSubTask != null) {
             Epic epic = getEpicById(removeSubTask.getEpicId());
@@ -89,22 +88,37 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void createTask(Task task) {
+    public Task createTask(Task task) {
         int taskId = generateCounter();
         task.setId(taskId);
         tasksMap.put(task.getId(), task);
+        return task;
+    }
+    @Override
+    public int createTask(String name, String description) {
+        int taskId = generateCounter();
+        Task task = new Task(name, description, Status.NEW, taskId);
+        tasksMap.put(taskId, task);
+        return taskId;
     }
 
-
     @Override
-    public void createEpic(Epic epic) {
+    public Epic createEpic(Epic epic){
         int epicId = generateCounter();
-        epic.setId(epicId);
+        epic.setId( epicId);
         epicsMap.put(epic.getId(), epic);
+        return epic;
+    }
+    @Override
+    public int createEpic(String name, String description) {
+        int epicId = generateCounter();
+        Epic epic = new Epic(name, description, Status.NEW, epicId);
+        epicsMap.put(epicId, epic);
+        return epicId;
     }
 
     @Override
-    public void createSubTask(SubTask subTask) {
+    public SubTask createSubTask(SubTask subTask) {
         int epicId = subTask.getEpicId();
         Epic epic = epicsMap.get(epicId);
         if (epic != null) {
@@ -117,8 +131,15 @@ public class InMemoryTaskManager implements TaskManager {
                 updateEpic(epic);
             }
         }
+        return subTask;
     }
-
+    @Override
+    public int createSubTask(String name, String description, Epic epic) {
+        int subTaskId = generateCounter();
+        SubTask subTask = new SubTask(name, description, Status.NEW, epic.getId());
+        subTasksMap.put(subTaskId, subTask);
+        return subTaskId;
+    }
     @Override
     public void updateTask(Task task) {
         int taskId = task.getId();
@@ -152,9 +173,8 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-
     @Override
-    public List<SubTask> getSubTasksEpicsIds(int epicId) {
+    public List<SubTask> getSubtasksByEpic(int epicId) {
         Epic epic = epicsMap.get(epicId);
         historyManager.add(epicsMap.get(epicId));
         if (epic != null) {
@@ -172,7 +192,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task get(int taskId) {
+    public Task getTaskById(int taskId) {
         historyManager.add(tasksMap.get(taskId));
         return tasksMap.get(taskId);
     }

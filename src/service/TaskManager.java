@@ -7,6 +7,7 @@ import models.Task;
 import java.util.List;
 
 public interface TaskManager {
+
     List<Task> getTasksList();
 
     List<Epic> getEpicList();
@@ -25,11 +26,17 @@ public interface TaskManager {
 
     void removeSubTaskId(int id);
 
-    void createTask(Task task);
+    Task createTask(Task task);
 
-    void createEpic(Epic epic);
+    int createTask(String name, String description);
 
-    void createSubTask(SubTask subTask);
+    Epic createEpic(Epic epic);
+
+    int createEpic(String name, String description);
+
+    SubTask createSubTask(SubTask subTask);
+
+    int createSubTask(String name, String description, Epic epic);
 
     void updateTask(Task task);
 
@@ -37,15 +44,14 @@ public interface TaskManager {
 
     void updateSubTask(SubTask subTask);
 
-    List<SubTask> getSubTasksEpicsIds(int epicId);
+    List<SubTask> getSubtasksByEpic(int epicId);
 
-    Task get(int id);
+    Task getTaskById(int id);
 
     Epic getEpicById(int id);
-
-    //SubTask getSubTaskById(int subTaskId);
 
     SubTask getSubTaskById(int subTaskId);
 
     List<Task> getHistory();
+
 }

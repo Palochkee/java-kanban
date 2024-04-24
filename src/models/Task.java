@@ -22,6 +22,7 @@ public class Task {
         this.status = status;
         this.id = 0;
     }
+
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
@@ -31,8 +32,12 @@ public class Task {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
 
+    public int getId(int id) {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
