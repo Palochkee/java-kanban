@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static models.SubTaskTest.taskManager;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 class TaskTest {
     @Test
     @DisplayName("Сравнение Task")
@@ -30,4 +34,15 @@ class TaskTest {
         SubTask subTask2 = new SubTask("test", "desc", Status.NEW, 2, 1);
         Assertions.assertEquals(subTask, subTask2);
     }
+    @Test
+    @DisplayName("Проверка задачи с id и сгенерированным id не конфликтуют")
+    void testTasksWithTheSpecifiedIdAndTheGeneratedIdDoNotConflict() {
+        Task task = new Task("test", "desc",Status.NEW,0);
+        Task task1 = new Task("test", "desc");
+        taskManager.createTask(task);
+        taskManager.createTask(task1);
+        assertEquals(taskManager.getTasksList().size(),2);
+        assertNotEquals(task, task1);
+    }
+
 }

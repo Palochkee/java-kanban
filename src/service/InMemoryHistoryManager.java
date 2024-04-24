@@ -37,7 +37,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public String toString() {
-        return "InMemoryHistoryManager{" +
+        return "{" +
                 "history=" + history +
                 '}';
     }
