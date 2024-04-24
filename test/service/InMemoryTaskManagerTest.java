@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class InMemoryTaskManagerTest {
     private TaskManager taskManager;
 
@@ -63,8 +65,8 @@ class InMemoryTaskManagerTest {
         taskManager.createTask(task);
         Task task1 = new Task("test", "desc", Status.NEW, 2);
         taskManager.createTask(task1);
-        Assertions.assertEquals(task, taskManager.get(task.getId()));
-        Assertions.assertEquals(task1, taskManager.get(task1.getId()));
+        Assertions.assertEquals(task, taskManager.getTaskById(task.getId()));
+        Assertions.assertEquals(task1, taskManager.getTaskById(task1.getId()));
     }
 
     @Test
@@ -75,7 +77,7 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("test", "desc", 2);
         taskManager.createTask(epic1);
         Assertions.assertEquals(epic, taskManager.getEpicById(epic.getId()));
-        Assertions.assertEquals(epic1, taskManager.get(epic1.getId()));
+        Assertions.assertEquals(epic1, taskManager.getTaskById(epic1.getId()));
     }
 
     @Test
@@ -119,7 +121,7 @@ class InMemoryTaskManagerTest {
         int id = task1.getId();
         Task task2 = new Task("test", "desc1", Status.IN_PROGRESS, id);
         taskManager.updateTask(task2);
-        Task taskInManager = taskManager.get(id);
+        Task taskInManager = taskManager.getTaskById(id);
         Assertions.assertEquals(task2.getName(), taskInManager.getName());
         Assertions.assertEquals(task2.getDescription(), taskInManager.getDescription());
     }
@@ -129,7 +131,7 @@ class InMemoryTaskManagerTest {
     void testCreateTaskNewTaskShouldBeEqualsWithTaskInManager() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
-        Task taskInManager = taskManager.get(task.getId());
+        Task taskInManager = taskManager.getTaskById(task.getId());
         Assertions.assertEquals(task.getName(), taskInManager.getName());
         Assertions.assertEquals(task.getDescription(), taskInManager.getDescription());
     }
@@ -157,5 +159,101 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(subtask.getEpicId(), SubtaskInManager.getEpicId());
     }
 
+    @Test
+    @DisplayName("Неизменность Task (по всем полям) при добавлении задачи в менеджер")
+    public void testCreateTaskCheckEveryField() {
+        Task task = taskManager.createTask(new Task("test", "desc", Status.NEW, 1));
+        Assertions.assertEquals(1, task.getId());
+        Assertions.assertEquals("test", task.getName());
+        Assertions.assertEquals("desc", task.getDescription());
+        Assertions.assertEquals(Status.NEW, task.getStatus());
+    }
+
+    @Test
+    @DisplayName("Неизменность Epic (по всем полям) при добавлении задачи в менеджер")
+    public void testCreateEpicCheckEveryField() {
+        Epic epic = taskManager.createEpic(new Epic("test", "desc", Status.NEW, 1));
+        Assertions.assertEquals(1, epic.getId());
+        Assertions.assertEquals("test", epic.getName());
+        Assertions.assertEquals("desc", epic.getDescription());
+        Assertions.assertEquals(Status.NEW, epic.getStatus());
+    }
+
+    @Test
+    @DisplayName("Неизменность SubTask (по всем полям) при добавлении задачи в менеджер")
+    public void testCreateSubTaskCheckEveryField() {
+        SubTask subTask = taskManager.createSubTask(new SubTask("test", "desc", Status.NEW, 1, 2));
+        Assertions.assertEquals(1, subTask.getId());
+        Assertions.assertEquals(2, subTask.getEpicId());
+        Assertions.assertEquals("test", subTask.getName());
+        Assertions.assertEquals("desc", subTask.getDescription());
+        Assertions.assertEquals(Status.NEW, subTask.getStatus());
+    }
+
+
+    @Test
+    @DisplayName("Проверка на ID")
+    void testShouldCreateIdCheckById() {
+        Task task = new Task("task", "descTask");
+        Epic epic = new Epic("epic", "descEpic");
+        Epic epic1 = new Epic("epic", "descEpic");
+        SubTask subTask = new SubTask("epic", "descEpic", Status.NEW, 1);
+        taskManager.createTask(task);
+        taskManager.createEpic(epic);
+        taskManager.createEpic(epic1);
+        int IdEpic = epic.getId();
+        int id = task.getId();
+        int IdEpic1 = epic1.getId();
+        taskManager.getEpicById(IdEpic1);
+        Assertions.assertEquals(task, taskManager.getTaskById(task.getId()));
+        Assertions.assertNotEquals(subTask, epic);
+        Assertions.assertNotEquals(IdEpic, id);
+        Assertions.assertNotEquals(task, epic.getId(id));
+        Assertions.assertNotEquals(epic.getId(IdEpic1), epic1.getId(IdEpic));
+    }
+
+    @Test
+    @DisplayName("Task нельзя добавить в самого себя в виде подзадачи")
+    void testShouldCreateIdAndSaveTaskById() {
+        Task task = new Task("epic", "desc");
+        final int taskId = taskManager.createTask("epic", "desc");
+        final Task savedTask = taskManager.getTaskById(taskId);
+        Assertions.assertNotNull(savedTask);
+        Assertions.assertNotEquals(task, savedTask);
+        final List<Task> tasks = taskManager.getTasksList();
+        Assertions.assertNotNull(tasks);
+        Assertions.assertEquals(1, tasks.size());
+        Assertions.assertNotEquals(task, tasks.getFirst());
+    }
+
+    @Test
+    @DisplayName("Epic нельзя добавить в самого себя в виде подзадачи")
+    void testShouldCreateIdAndSaveEpicById() {
+        Epic epic = new Epic("epic", "desc");
+        final int epicId = taskManager.createEpic("epic", "desc");
+        final Epic savedEic = taskManager.getEpicById(epicId);
+        Assertions.assertNotNull(savedEic);
+        Assertions.assertNotEquals(epic, savedEic);
+        final List<Epic> epics = taskManager.getEpicList();
+        Assertions.assertNotNull(epics);
+        Assertions.assertEquals(1, epics.size());
+        Assertions.assertNotEquals(epic, epics.getFirst());
+    }
+
+    @Test
+    @DisplayName("SubTask нельзя сделать своим же эпиком")
+    void testShouldCreateIdAndSaveSubTaskById() {
+        SubTask subTask = new SubTask("subTask", "desc", Status.NEW, 1);
+        Epic epic = new Epic("epic", "desc");
+        final int subTaskId = taskManager.createSubTask("task", "desc", epic);
+        final int epicId = taskManager.createEpic("task", "desc");
+        final int savedSubTask = taskManager.createEpic("subTask", "desc");
+        Assertions.assertNotEquals(subTaskId, savedSubTask);
+        Assertions.assertNotEquals(epicId, savedSubTask);
+        final List<SubTask> subTasks = taskManager.getSubtaskList();
+        Assertions.assertNotNull(subTasks);
+        Assertions.assertEquals(1, subTasks.size());
+        Assertions.assertEquals(subTask, subTasks.getFirst());
+    }
 
 }
