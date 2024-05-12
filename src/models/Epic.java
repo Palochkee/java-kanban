@@ -49,7 +49,5 @@ public class Epic extends Task {
                 "id=" + super.getId() +
                 '}';
     }
+
 }
-
-
-
