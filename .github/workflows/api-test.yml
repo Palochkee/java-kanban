@@ -1,0 +1,8 @@
+name: Java Test
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    uses: yandex-praktikum/java-kanban/.github/workflows/api-test.yml@ci
