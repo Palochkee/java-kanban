@@ -4,7 +4,6 @@ import models.Epic;
 import models.Status;
 import models.SubTask;
 import models.Task;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -255,5 +254,4 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(1, subTasks.size());
         Assertions.assertEquals(subTask, subTasks.getFirst());
     }
-
 }
