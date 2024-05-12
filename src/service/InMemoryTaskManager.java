@@ -228,20 +228,20 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicsMap.get(epicId);
         if (epic != null) {
             int tasksSize = epicsMap.size();
-            int StatusNEW = 0;
-            int StatusDONE = 0;
+            int StatNEW = 0;
+            int StatDONE = 0;
 
             for (int subTaskId : epic.getSubTasksIds()) {
                 SubTask subTaskInEpic = subTasksMap.get(subTaskId);
                 if (subTaskInEpic.getStatus() == Status.NEW) {
-                    StatusNEW++;
+                    StatNEW++;
                 } else if (subTaskInEpic.getStatus() == Status.DONE) {
-                    StatusDONE++;
+                    StatDONE++;
                 }
             }
-            if (tasksSize == 0 || tasksSize == StatusNEW) {
+            if (tasksSize == 0 || tasksSize == StatNEW) {
                 epic.setStatus(Status.NEW);
-            } else if (tasksSize == StatusDONE) {
+            } else if (tasksSize == StatDONE) {
                 epic.setStatus(Status.DONE);
             } else {
                 epic.setStatus(Status.IN_PROGRESS);
