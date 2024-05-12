@@ -33,14 +33,6 @@ public class Epic extends Task {
         return subTasksIds;
     }
 
-    public void removeSubtaskIds(Integer subtask) {
-        subTasksIds.remove(subtask);
-    }
-
-    public void updateStatus() {
-        status = Status.NEW;
-    }
-
     public String toString() {
         return "Subtask{" +
                 ", name='" + super.getName() + '\'' +
