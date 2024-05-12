@@ -1,5 +1,6 @@
 package models;
 
+
 public class SubTask extends Task {
     private int epicId; //
 
@@ -12,6 +13,8 @@ public class SubTask extends Task {
         super(name, description, status);
         this.epicId = epicId;
     }
+
+
     public int getEpicId() {
         return epicId;
     }
@@ -35,4 +38,3 @@ public class SubTask extends Task {
     }
 
 }
-

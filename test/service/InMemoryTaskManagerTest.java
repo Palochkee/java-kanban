@@ -4,7 +4,6 @@ import models.Epic;
 import models.Status;
 import models.SubTask;
 import models.Task;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +20,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Тест работы счетчика counter для Task")
+    @DisplayName("тест работы счетчика counter для Task")
     void testCreateTaskShouldAddTaskToTasksList() {
         int count = taskManager.getTasksList().size();
         taskManager.createTask(new Task("test", "desc", Status.NEW));
@@ -31,7 +30,7 @@ class InMemoryTaskManagerTest {
 
 
     @Test
-    @DisplayName("Тест работы счетчика counter для Epic")
+    @DisplayName("тест работы счетчика counter для Epic")
     void testCreateEpicShouldAddEpicToEpicsList() {
         int count = taskManager.getEpicList().size();
         taskManager.createEpic(new Epic("test", "desc", 1));
@@ -40,7 +39,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Тест работы счетчика counter для SubTask")
+    @DisplayName("тест работы счетчика counter для SubTask")
     void testCreateSubTaskShouldAddSubTaskToSubTasksList() {
         int count = taskManager.getSubtaskList().size();
         Epic epic = new Epic("test", "desc", 1);
@@ -51,7 +50,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Тест работы счетчика counter по ID для Task")
+    @DisplayName("тест работы счетчика counter по ID для Task")
     void testCreateTaskShouldCreatedCounterId() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
@@ -59,7 +58,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Сравнение ID для Task")
+    @DisplayName("сравнение ID для Task")
     void testGetTaskByIdShouldReturnTaskById() {
         Task task = new Task("test", "desc", Status.NEW, 1);
         taskManager.createTask(task);
@@ -70,7 +69,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Сравнение ID для Epic")
+    @DisplayName("сравнение ID для Epic")
     void testGetEpicByIdShouldReturnEpicById() {
         Epic epic = new Epic("test", "desc", 1);
         taskManager.createEpic(epic);
@@ -81,7 +80,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Сравнение ID для SubTask")
+    @DisplayName("сравнение ID для SubTask")
     void testGetSubTaskByIdShouldReturnSubTaskById() {
         Epic epic = new Epic("test", "desc");
         Epic subTask = new Epic("test", "desc", Status.NEW, 1);
@@ -89,12 +88,13 @@ class InMemoryTaskManagerTest {
         taskManager.createEpic(epic);
         taskManager.createEpic(subTask);
         taskManager.createEpic(subTask1);
+        taskManager.createTask(epic);
         Assertions.assertEquals(subTask, taskManager.getEpicById(subTask.getId()));
         Assertions.assertEquals(subTask1, taskManager.getEpicById(subTask1.getId()));
     }
 
     @Test
-    @DisplayName("Удаление всех Task")
+    @DisplayName("удаление всех Task")
     void testRemoveTasksShouldDeleteAllTasksFromTasksList() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
@@ -103,7 +103,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Task равен с Task в TaskManager по ID")
+    @DisplayName("Task равен с Task в TaskManager")
     void testCreateTaskTaskWithIdEqualsWithTaskInTaskManager() {
         Task task1 = new Task("test", "desc", Status.NEW);
         Task task2 = new Task("test", "desc", Status.NEW);
@@ -127,7 +127,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Удаление Task по ID")
+    @DisplayName("удаление Task по ID")
     void testCreateTaskNewTaskShouldBeEqualsWithTaskInManager() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
@@ -160,7 +160,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Неизменность Task (по всем полям) при добавлении задачи в менеджер")
+    @DisplayName("неизменность Task (по всем полям) при добавлении задачи в менеджер")
     public void testCreateTaskCheckEveryField() {
         Task task = taskManager.createTask(new Task("test", "desc", Status.NEW, 1));
         Assertions.assertEquals(1, task.getId());
@@ -170,7 +170,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Неизменность Epic (по всем полям) при добавлении задачи в менеджер")
+    @DisplayName("неизменность Epic (по всем полям) при добавлении задачи в менеджер")
     public void testCreateEpicCheckEveryField() {
         Epic epic = taskManager.createEpic(new Epic("test", "desc", Status.NEW, 1));
         Assertions.assertEquals(1, epic.getId());
@@ -180,7 +180,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("Неизменность SubTask (по всем полям) при добавлении задачи в менеджер")
+    @DisplayName("неизменность SubTask (по всем полям) при добавлении задачи в менеджер")
     public void testCreateSubTaskCheckEveryField() {
         SubTask subTask = taskManager.createSubTask(new SubTask("test", "desc", Status.NEW, 1, 2));
         Assertions.assertEquals(1, subTask.getId());
@@ -192,7 +192,7 @@ class InMemoryTaskManagerTest {
 
 
     @Test
-    @DisplayName("Проверка на ID")
+    @DisplayName("проверка на ID")
     void testShouldCreateIdCheckById() {
         Task task = new Task("task", "descTask");
         Epic epic = new Epic("epic", "descEpic");

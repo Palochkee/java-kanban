@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import service.Managers;
 import service.TaskManager;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class EpicTest {
@@ -56,10 +56,11 @@ public class EpicTest {
         epic.setId(epic.getId());
         assertEquals(epic, epic1);
     }
+
     @Test
     @DisplayName("Epic заданным id и сгенерированным id не конфликтуют внутри менеджера")
     void epicWithTheSpecifiedIdAndTheGeneratedIdDoNotConflict() {
-        Epic epic1 = new Epic("test", "desc",0);
+        Epic epic1 = new Epic("test", "desc", 0);
         Epic epic2 = new Epic("test", "desc");
         taskManager.createEpic(epic1);
         taskManager.createEpic(epic2);
@@ -69,4 +70,3 @@ public class EpicTest {
     }
 
 }
-
