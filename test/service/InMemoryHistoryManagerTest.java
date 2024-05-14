@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -100,7 +101,7 @@ class InMemoryHistoryManagerTest {
         historyManager.remove(2);
         historyManager.remove(3);
         List<Task> historyIsEmpty = historyManager.getHistory();
-        List<Task> nullHistory = List.of();
+        List<Task> nullHistory = Collections.emptyList();
         assertEquals(nullHistory, historyIsEmpty);
     }
 

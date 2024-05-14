@@ -12,17 +12,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node first;
     private Node last;
 
-    private static class Node {
-        Node next;
-        Node prev;
-        Task task;
-
-        public Node(Task task) {
-            this.task = task;
-        }
-    }
-
-
     @Override
     public void add(Task task) {
         if (historyIndex.containsKey(task.getId())) {
@@ -96,4 +85,15 @@ public class InMemoryHistoryManager implements HistoryManager {
                 ", tail=" + last +
                 '}';
     }
+
+    private static class Node {
+        Node next;
+        Node prev;
+        Task task;
+
+        public Node(Task task) {
+            this.task = task;
+        }
+    }
+
 }
