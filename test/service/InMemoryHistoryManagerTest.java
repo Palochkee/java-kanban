@@ -31,7 +31,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    @DisplayName("тест работы метода создание Task")
+    @DisplayName("Тест работы метода создание Task")
     void testCreateTaskWhenHistoryManagerThenReturnSize() {
         historyManager.add(createTask(1));
         int actualSize = historyManager.getHistory().size();
@@ -39,7 +39,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("тест удаления первого Task")
+    @DisplayName("Тест удаления первого Task")
     void testRemoveFirstTask() {
         Task task = createTask(1);
         historyManager.add(task);
@@ -53,7 +53,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    @DisplayName("тест удаления последнего Task")
+    @DisplayName("Тест удаления последнего Task")
     void testRemoveLastTask() {
         Task task = createTask(1);
         historyManager.add(task);
@@ -67,7 +67,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    @DisplayName("тест удаления среднего Task")
+    @DisplayName("Тест удаления среднего Task")
     void testRemoveMiddleTask() {
         Task task = createTask(1);
         historyManager.add(task);
@@ -81,7 +81,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    @DisplayName("тест невозможности добавить дубль Task")
+    @DisplayName("Тест невозможности добавить дубль Task")
     void testNotAddDoubleTaskInHistoryManager() {
         Task task = createTask(1);
         historyManager.add(task);
@@ -91,7 +91,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("тест записи и удаления всего списка HistoryManager")
+    @DisplayName("Тест записи и удаления всего списка HistoryManager")
     void testRemoveWhenRecordExistThenHistoryIsEmpty() {
         Task task = createTask(1);
         historyManager.add(task);
@@ -106,7 +106,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("тест добавления и записи Task в начало HistoryManager")
+    @DisplayName("Тест добавления и записи Task в начало HistoryManager")
     void testAddWhenRecordIsFirst() {
         Task task1 = createTask(1);
         historyManager.add(task1);
@@ -117,7 +117,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("тест добавления и записи Task в конец HistoryManager")
+    @DisplayName("Тест добавления и записи Task в конец HistoryManager")
     void testAddWhenRecordIsLast() {
         historyManager.add(createTask(1));
         historyManager.add(createTask(2));
@@ -130,7 +130,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("тест добавления и записи Task в середину HistoryManager")
+    @DisplayName("Тест добавления и записи Task в середину HistoryManager")
     void testAddWhenRecordInTheMiddle() {
         historyManager.add(createTask(1));
         Task task2 = createTask(2);
@@ -142,7 +142,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    @DisplayName("тест добавления и записи трех Task в HistoryManager")
+    @DisplayName("Тест добавления и записи трех Task в HistoryManager")
     void testGetHistoryWhen3RecordsExistThenReturnHistoryList() {
         Task task1 = createTask(1);
         historyManager.add(task1);
@@ -155,7 +155,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    @DisplayName("тест задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных")
+    @DisplayName("Тест задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных")
     void testTaskAddedRetainThePreviousVersionInMemoryHistoryManager() {
         Task task = new Task("test", "desc", Status.NEW, 1);
         Epic epic = new Epic("test", "desc", Status.NEW, 2);
@@ -176,5 +176,4 @@ class InMemoryHistoryManagerTest {
         assertEquals("desc", subTask.getDescription());
         assertEquals(Status.NEW, subTask.getStatus());
     }
-
 }

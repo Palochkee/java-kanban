@@ -20,7 +20,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("тест работы счетчика counter для Task")
+    @DisplayName("Тест работы счетчика counter для Task")
     void testCreateTaskShouldAddTaskToTasksList() {
         int count = taskManager.getTasksList().size();
         taskManager.createTask(new Task("test", "desc", Status.NEW));
@@ -30,7 +30,7 @@ class InMemoryTaskManagerTest {
 
 
     @Test
-    @DisplayName("тест работы счетчика counter для Epic")
+    @DisplayName("Тест работы счетчика counter для Epic")
     void testCreateEpicShouldAddEpicToEpicsList() {
         int count = taskManager.getEpicList().size();
         taskManager.createEpic(new Epic("test", "desc", 1));
@@ -39,7 +39,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("тест работы счетчика counter для SubTask")
+    @DisplayName("Тест работы счетчика counter для SubTask")
     void testCreateSubTaskShouldAddSubTaskToSubTasksList() {
         int count = taskManager.getSubtaskList().size();
         Epic epic = new Epic("test", "desc", 1);
@@ -50,7 +50,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("тест работы счетчика counter по ID для Task")
+    @DisplayName("Тест работы счетчика counter по ID для Task")
     void testCreateTaskShouldCreatedCounterId() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
@@ -58,7 +58,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("сравнение ID для Task")
+    @DisplayName("Сравнение ID для Task")
     void testGetTaskByIdShouldReturnTaskById() {
         Task task = new Task("test", "desc", Status.NEW, 1);
         taskManager.createTask(task);
@@ -69,7 +69,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("сравнение ID для Epic")
+    @DisplayName("Сравнение ID для Epic")
     void testGetEpicByIdShouldReturnEpicById() {
         Epic epic = new Epic("test", "desc", 1);
         taskManager.createEpic(epic);
@@ -80,7 +80,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("сравнение ID для SubTask")
+    @DisplayName("Сравнение ID для SubTask")
     void testGetSubTaskByIdShouldReturnSubTaskById() {
         Epic epic = new Epic("test", "desc");
         Epic subTask = new Epic("test", "desc", Status.NEW, 1);
@@ -94,7 +94,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("удаление всех Task")
+    @DisplayName("Удаление всех Task")
     void testRemoveTasksShouldDeleteAllTasksFromTasksList() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
@@ -255,5 +255,4 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(1, subTasks.size());
         Assertions.assertEquals(subTask, subTasks.getFirst());
     }
-
 }
