@@ -1,7 +1,7 @@
 import models.Epic;
 import models.Status;
-import models.Task;
 import models.SubTask;
+import models.Task;
 import service.Managers;
 import service.TaskManager;
 
@@ -98,7 +98,7 @@ public class Main {
         for (SubTask subtask : taskManager.getSubtasksByEpic(epic1.getId())) {
             System.out.println(subtask.getName());
             System.out.println();
-            System.out.println("День был продуктивным");
+            System.out.println("День - был продуктивным");
         }
     }
 }
