@@ -1,7 +1,8 @@
 package service;
 
+import enums.Status;
+import interfaces.TaskManager;
 import models.Epic;
-import models.Status;
 import models.SubTask;
 import models.Task;
 import org.junit.jupiter.api.Assertions;
@@ -127,7 +128,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("удаление Task по ID")
+    @DisplayName("Удаление Task по ID")
     void testCreateTaskNewTaskShouldBeEqualsWithTaskInManager() {
         Task task = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
@@ -160,7 +161,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("неизменность Task (по всем полям) при добавлении задачи в менеджер")
+    @DisplayName("Неизменность Task (по всем полям) при добавлении задачи в менеджер")
     public void testCreateTaskCheckEveryField() {
         Task task = taskManager.createTask(new Task("test", "desc", Status.NEW, 1));
         Assertions.assertEquals(1, task.getId());
@@ -170,7 +171,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("неизменность Epic (по всем полям) при добавлении задачи в менеджер")
+    @DisplayName("Неизменность Epic (по всем полям) при добавлении задачи в менеджер")
     public void testCreateEpicCheckEveryField() {
         Epic epic = taskManager.createEpic(new Epic("test", "desc", Status.NEW, 1));
         Assertions.assertEquals(1, epic.getId());
@@ -180,7 +181,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    @DisplayName("неизменность SubTask (по всем полям) при добавлении задачи в менеджер")
+    @DisplayName("Неизменность SubTask (по всем полям) при добавлении задачи в менеджер")
     public void testCreateSubTaskCheckEveryField() {
         SubTask subTask = taskManager.createSubTask(new SubTask("test", "desc", Status.NEW, 1, 2));
         Assertions.assertEquals(1, subTask.getId());
@@ -192,7 +193,7 @@ class InMemoryTaskManagerTest {
 
 
     @Test
-    @DisplayName("проверка на ID")
+    @DisplayName("Проверка на ID")
     void testShouldCreateIdCheckById() {
         Task task = new Task("task", "descTask");
         Epic epic = new Epic("epic", "descEpic");
@@ -255,4 +256,5 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(1, subTasks.size());
         Assertions.assertEquals(subTask, subTasks.getFirst());
     }
+
 }

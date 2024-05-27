@@ -1,5 +1,8 @@
 package service;
 
+import interfaces.HistoryManager;
+import interfaces.TaskManager;
+
 public class Managers {
 
     public static TaskManager getDefault() {
@@ -10,4 +13,7 @@ public class Managers {
         return new InMemoryHistoryManager();
     }
 
+    public static TaskManager getFileBackedTaskManager() {
+        return new FileBackedTaskManager();
+    }
 }

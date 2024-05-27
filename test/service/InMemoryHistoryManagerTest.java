@@ -1,7 +1,8 @@
 package service;
 
+import enums.Status;
+import interfaces.HistoryManager;
 import models.Epic;
-import models.Status;
 import models.SubTask;
 import models.Task;
 import org.junit.jupiter.api.BeforeEach;

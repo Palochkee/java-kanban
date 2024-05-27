@@ -1,4 +1,4 @@
-package service;
+package interfaces;
 
 import models.Epic;
 import models.SubTask;
@@ -53,5 +53,4 @@ public interface TaskManager {
     SubTask getSubTaskById(int subTaskId);
 
     List<Task> getHistory();
-
 }

@@ -1,0 +1,4 @@
+id,type,name,status,description,epic
+Task{, name='New Task', description='New Task Desc', status=NEWid=1}
+Subtask{, name='New Epic', description=' New Epic Desc', status=IN_PROGRESSid=2}
+Subtask{, name='New Subtask', description='New sub desc', status=NEWid=3, epicId=2}

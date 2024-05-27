@@ -1,9 +1,9 @@
+import enums.Status;
+import interfaces.TaskManager;
 import models.Epic;
-import models.Status;
 import models.SubTask;
 import models.Task;
 import service.Managers;
-import service.TaskManager;
 
 public class Main {
 
@@ -11,8 +11,8 @@ public class Main {
         System.out.println("Трекер задач на каждый день!");
         TaskManager taskManager = Managers.getDefault();
 
-        Task task1 = new Task("Работа", "Сходить на работу");
-        Task task2 = new Task("Семья", "Уделить время семье");
+        Task task1 = new Task("Работа", "Сходить на работу", Status.NEW, 0);
+        Task task2 = new Task("Семья", "Уделить время семье", Status.NEW, 0);
         taskManager.createTask(task1);
         taskManager.createTask(task2);
 

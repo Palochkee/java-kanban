@@ -1,17 +1,22 @@
 package models;
 
 
+import enums.Status;
+import enums.TaskType;
+
 public class SubTask extends Task {
-    private int epicId; //
+    private final int epicId; //
 
     public SubTask(String name, String description, Status status, int id, int epicId) {
         super(name, description, status, id);
         this.epicId = epicId;
+        this.taskType = TaskType.SUBTASK;
     }
 
     public SubTask(String name, String description, Status status, int epicId) {
         super(name, description, status);
         this.epicId = epicId;
+        this.taskType = TaskType.SUBTASK;
     }
 
 
@@ -19,22 +24,16 @@ public class SubTask extends Task {
         return epicId;
     }
 
-    public void setEpicId(int epicId) {
-        this.epicId = epicId;
-    }
-
-    public void updateStatus() {
-        status = Status.NEW;
-    }
 
     public String toString() {
         return "Subtask{" +
-                ", name='" + super.getName() + '\'' +
-                ", description='" + super.getDescription() + '\'' +
-                ", status=" + super.getStatus() +
-                "id=" + super.getId() +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                "id=" + id +
                 ", epicId=" + epicId +
                 '}';
     }
 
 }
+
