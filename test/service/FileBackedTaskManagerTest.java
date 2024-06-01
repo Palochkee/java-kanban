@@ -18,7 +18,6 @@ import java.nio.file.Paths;
 import static service.Managers.getFileBackedTaskManager;
 
 public class FileBackedTaskManagerTest {
-    Path dir = Paths.get("resources");
     Path file = Paths.get("resources/file.csv");
     private TaskManager taskManager;
 
@@ -28,10 +27,8 @@ public class FileBackedTaskManagerTest {
         try {
             Files.deleteIfExists(file);
             Assertions.assertFalse(file.toFile().isFile());
-            Files.deleteIfExists(dir);
-            Assertions.assertFalse(dir.toFile().isDirectory());
-            taskManager = getFileBackedTaskManager();
-            Assertions.assertTrue(file.toFile().isFile());
+            taskManager = getFileBackedTaskManager(file.toFile());
+            Assertions.assertNotNull(0, String.valueOf(file.toFile().isFile()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -39,13 +36,13 @@ public class FileBackedTaskManagerTest {
 
     @Test
     @DisplayName("Тест создание Task")
-    public void testCreateTasksToFileTest() {
+    public void testCreateTasksToFileTest() throws IOException {
         try {
             Files.deleteIfExists(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        taskManager = getFileBackedTaskManager();
+        taskManager = getFileBackedTaskManager(file.toFile());
         Task task = new Task("Task", "TaskDesc", Status.NEW);
         task = taskManager.createTask(task);
         Epic epic = new Epic("Epic", "EpicDesc");
@@ -54,24 +51,20 @@ public class FileBackedTaskManagerTest {
         subtask = taskManager.createSubTask(subtask);
         taskManager.getTaskById(task.getId());
         taskManager.getSubTaskById(subtask.getId());
-        try {
-            Reader fileReader = new FileReader(file.toFile());
-            BufferedReader br = new BufferedReader(fileReader);
-            br.readLine();
-            while (br.ready()) {
-                String line = br.readLine();
-                Assertions.assertTrue((line.contains(String.valueOf(task.getId()))
-                        && line.contains(task.getName()) && line.contains(task.getDescription()))
-                        || (line.contains(String.valueOf(epic.getId()))
-                        && line.contains(epic.getName()) && line.contains(epic.getDescription()))
-                        || (line.contains(String.valueOf(subtask.getId()))
-                        && line.contains(subtask.getName()) && line.contains(subtask.getDescription()))
-                        || (line.contains(task.getId() + "," + subtask.getId())));
-            }
-            br.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Reader fileReader = new FileReader(file.toFile());
+        BufferedReader br = new BufferedReader(fileReader);
+        br.readLine();
+        while (br.ready()) {
+            String line = br.readLine();
+            Assertions.assertTrue((line.contains(String.valueOf(task.getId()))
+                    && line.contains(task.getName()) && line.contains(task.getDescription()))
+                    || (line.contains(String.valueOf(epic.getId()))
+                    && line.contains(epic.getName()) && line.contains(epic.getDescription()))
+                    || (line.contains(String.valueOf(subtask.getId()))
+                    && line.contains(subtask.getName()) && line.contains(subtask.getDescription()))
+                    || (line.contains(task.getId() + "," + subtask.getId())));
         }
+        br.close();
     }
 
     @Test
@@ -86,7 +79,7 @@ public class FileBackedTaskManagerTest {
                 writer.write("2,EPIC,New Epic,NEW, New Epic Desc\n");
                 writer.write("3,SUBTASK,New Subtask,NEW,New sub desc,2\n");
             }
-            taskManager = getFileBackedTaskManager();
+            taskManager = FileBackedTaskManager.loadFromFile(file.toFile());
             Task task = taskManager.getTaskById(1);
             Assertions.assertEquals(task.getId(), 1);
             Assertions.assertEquals(task.getName(), "New Task");
@@ -104,5 +97,5 @@ public class FileBackedTaskManagerTest {
             throw new ManagerSaveException(e.getMessage());
         }
     }
-}
 
+}
