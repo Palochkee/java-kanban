@@ -1,4 +1,4 @@
-id,type,name,status,description,epic
-Task{, name='New Task', description='New Task Desc', status=NEWid=1}
-Subtask{, name='New Epic', description=' New Epic Desc', status=IN_PROGRESSid=2}
-Subtask{, name='New Subtask', description='New sub desc', status=NEWid=3, epicId=2}
+id,type,name,status,description,startTime,endTime,duration,epic
+Task{name='New Task', description='New Task Desc', status=DONE, id=1, taskType=TASK, duration=0, startTime=null}
+Epic{subTasksIds=[3], endTime=null, name='New Epic', description=' New Epic Desc', status=NEW, id=2, taskType=EPIC, duration=0, startTime=null}
+SubTask{epicId=2, name='New Subtask', description='New sub desc', status=NEW, id=3, taskType=SUBTASK, duration=0, startTime=null}
