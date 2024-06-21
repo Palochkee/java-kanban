@@ -1,5 +1,8 @@
 package models;
 
+import enums.Status;
+import enums.TaskType;
+
 import java.util.Objects;
 
 public class Task {
@@ -8,12 +11,14 @@ public class Task {
     protected String description;
     protected Status status;
     protected int id;
+    protected TaskType taskType;
 
     public Task(String name, String description, Status status, int id) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.id = id;
+        this.taskType = TaskType.TASK;
     }
 
     public Task(String name, String description, Status status) {
@@ -21,12 +26,14 @@ public class Task {
         this.description = description;
         this.status = status;
         this.id = 0;
+        this.taskType = TaskType.TASK;
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.taskType = TaskType.TASK;
     }
 
     public int getId() {
@@ -38,7 +45,6 @@ public class Task {
     }
 
     public void setId(int id) {
-
         this.id = id;
     }
 
@@ -81,11 +87,14 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                "id=" + id +
-                '}';
+        return "Task{" + ", name='" + name + '\'' + ", description='" + description + '\'' + ", status=" + status + "id=" + id + '}';
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setType(TaskType type) {
+        this.taskType = type;
     }
 }

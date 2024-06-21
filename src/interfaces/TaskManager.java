@@ -1,4 +1,4 @@
-package service;
+package interfaces;
 
 import models.Epic;
 import models.SubTask;

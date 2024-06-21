@@ -1,5 +1,7 @@
 package service;
 
+
+import interfaces.HistoryManager;
 import models.Task;
 
 import java.util.ArrayList;
@@ -95,5 +97,4 @@ public class InMemoryHistoryManager implements HistoryManager {
             this.task = task;
         }
     }
-
 }
