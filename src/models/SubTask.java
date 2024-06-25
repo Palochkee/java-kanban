@@ -1,6 +1,5 @@
 package models;
 
-
 import enums.Status;
 import enums.TaskType;
 
@@ -35,6 +34,13 @@ public class SubTask extends Task {
         this.epicId = epicId;
         this.taskType = TaskType.SUBTASK;
     }
+
+    public SubTask(String name, String description, Status status, int id, int idEpic, LocalDateTime startTime,
+                   int duration) {
+        super(name, description, status, id, startTime, duration);
+        this.epicId = idEpic;
+    }
+
 
     public int getEpicId() {
         return epicId;

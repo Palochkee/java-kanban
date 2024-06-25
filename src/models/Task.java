@@ -5,9 +5,10 @@ import enums.TaskType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task> {
 
     protected String name;
     protected String description;
@@ -16,6 +17,7 @@ public class Task {
     protected TaskType taskType;
     protected int duration;
     protected LocalDateTime startTime;
+
 
     public Task(String name, String description, Status status, int id) {
         this.name = name;
@@ -93,6 +95,7 @@ public class Task {
         return duration;
     }
 
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -144,4 +147,10 @@ public class Task {
         if (startTime == null) return null;
         return startTime.plus(Duration.ofMinutes(duration));
     }
+
+    @Override
+    public int compareTo(Task task) {
+        return Comparator.comparing(Task::getStartTime).thenComparing(Task::getTaskType).compare(this, task);
+    }
+
 }

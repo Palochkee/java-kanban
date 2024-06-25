@@ -27,7 +27,7 @@ public class ManagersTest {
     }
 
     @Test
-    @DisplayName("Возвращает файл для TaskManager")
+    @DisplayName("Возвращает файл для FileBackedTaskManager")
     public void testGetFileBackedTaskManager() {
         TaskManager test = Managers.getFileBackedTaskManager(new File("resources/file.csv"));
         assertNotNull(test);

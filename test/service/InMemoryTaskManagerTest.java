@@ -1,6 +1,5 @@
 package service;
 
-
 import enums.Status;
 import models.Epic;
 import models.SubTask;
@@ -15,7 +14,6 @@ import java.util.List;
 import static service.Managers.getDefault;
 
 class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
-
 
     @BeforeEach
     void beforeEach() {
@@ -259,5 +257,4 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         Assertions.assertEquals(1, subTasks.size());
         Assertions.assertNotEquals(subTask, taskManager.getSubtaskList());
     }
-
 }

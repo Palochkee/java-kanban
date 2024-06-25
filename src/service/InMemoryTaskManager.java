@@ -26,7 +26,7 @@ public class InMemoryTaskManager implements TaskManager {
         epicsMap = new HashMap<>();
         subTasksMap = new HashMap<>();
         historyManager = Managers.getDefaultHistory();
-        this.sortedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime).thenComparing(Task::getTaskType));
+        this.sortedTasks = new TreeSet<>();
     }
 
     @Override
@@ -132,7 +132,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task createTask(Task task) { // унифицировал все методы создания
-        if (checkTimeTask(task)) throw new DurationException("Есть пересечение по времени выполения задач Task!");
+        if (checkTimeTask(task)) {
+            throw new DurationException("Есть пересечение по времени выполения задач Task!");
+        }
         int taskId = generateCounter();
         task.setId(taskId);
         tasksMap.put(task.getId(), task);
@@ -151,7 +153,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic createEpic(Epic epic) {
-        if (checkTimeTask(epic)) throw new DurationException("Есть пересечение по времени выполения задач Epic!");
+        if (checkTimeTask(epic)) {
+            throw new DurationException("Есть пересечение по времени выполения задач Epic!");
+        }
         int epicId = generateCounter();
         epic.setId(epicId);
         epicsMap.put(epic.getId(), epic);
@@ -172,8 +176,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public SubTask createSubTask(SubTask subTask) {
-        if (checkTimeTask(subTask))
+        if (checkTimeTask(subTask)) {
             throw new DurationException("Есть пересечение по времени выполения задач SubTask!");
+        }
         int epicId = subTask.getEpicId();
         Epic epic = epicsMap.get(epicId);
         if (epic == null) {
@@ -202,8 +207,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
-        if (checkTimeTask(task)) throw new DurationException("Есть пересечение по времени выполения задач " +
-                "при обновлении Task!");
+        if (checkTimeTask(task)) {
+            throw new DurationException("Есть пересечение по времени выполения задач " +
+                    "при обновлении Task!");
+        }
         int taskId = task.getId();
         Task savedTask = tasksMap.get(taskId);
         if (savedTask == null) {
@@ -216,8 +223,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) {
-        if (checkTimeTask(epic)) throw new DurationException("Есть пересечение по времени выполения задач " +
-                "при обновлении Epic!");
+        if (checkTimeTask(epic)) {
+            throw new DurationException("Есть пересечение по времени выполения задач " +
+                    "при обновлении Epic!");
+        }
         Epic savedEpic = epicsMap.get(epic.getId());
         if (savedEpic == null) {
             throw new RuntimeException("Epic необновился");
@@ -237,7 +246,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubTask(SubTask subTask) {
-        if (checkTimeTask(subTask)) throw new DurationException("Есть пересечение по времени выполения задач!");
+        if (checkTimeTask(subTask)) {
+            throw new DurationException("Есть пересечение по времени выполения задач!");
+        }
         int subTaskId = subTask.getId();
         if (subTasksMap.containsKey(subTaskId)) {
             SubTask updateSubTask = subTasksMap.get(subTaskId);
