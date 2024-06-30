@@ -5,6 +5,7 @@ import models.SubTask;
 import models.Task;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -53,5 +54,7 @@ public interface TaskManager {
     SubTask getSubTaskById(int subTaskId);
 
     List<Task> getHistory();
+
+    Set<Task> getSortedTasks();
 
 }

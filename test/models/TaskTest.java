@@ -1,5 +1,6 @@
 package models;
 
+
 import enums.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class TaskTest {
     @DisplayName("Задачи с заданным id и сгенерированным id не конфликтуют внутри менеджера")
     void testTasksWithTheSpecifiedIdAndTheGeneratedIdDoNotConflict() {
         Task task = new Task("test", "desc", Status.NEW, 0);
-        Task task1 = new Task("test", "desc");
+        Task task1 = new Task("test", "desc", Status.NEW);
         taskManager.createTask(task);
         taskManager.createTask(task1);
         assertEquals(taskManager.getTasksList().size(), 2);

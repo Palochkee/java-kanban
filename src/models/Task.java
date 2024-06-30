@@ -3,15 +3,21 @@ package models;
 import enums.Status;
 import enums.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task> {
 
     protected String name;
     protected String description;
     protected Status status;
     protected int id;
     protected TaskType taskType;
+    protected int duration;
+    protected LocalDateTime startTime;
+
 
     public Task(String name, String description, Status status, int id) {
         this.name = name;
@@ -29,11 +35,24 @@ public class Task {
         this.taskType = TaskType.TASK;
     }
 
-    public Task(String name, String description) {
+    public Task(String name, String description, Status status, int id, LocalDateTime startTime, int duration) {
         this.name = name;
         this.description = description;
-        this.status = Status.NEW;
+        this.id = id;
+        this.status = status;
         this.taskType = TaskType.TASK;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
+    public Task(String name, String description, Status status, LocalDateTime startTime, int duration) {
+        this.name = name;
+        this.description = description;
+        this.id = 0;
+        this.status = status;
+        this.taskType = TaskType.TASK;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public int getId() {
@@ -72,9 +91,25 @@ public class Task {
         this.description = description;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public int getDuration() {
+        return duration;
+    }
+
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
     @Override
@@ -82,12 +117,22 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id;
+        return id == task.id && duration == task.duration && Objects.equals(name, task.name)
+                && Objects.equals(description, task.description) && status == task.status
+                && taskType == task.taskType && Objects.equals(startTime, task.startTime);
     }
 
     @Override
     public String toString() {
-        return "Task{" + ", name='" + name + '\'' + ", description='" + description + '\'' + ", status=" + status + "id=" + id + '}';
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", id=" + id +
+                ", taskType=" + taskType +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                '}';
     }
 
     public TaskType getTaskType() {
@@ -97,4 +142,15 @@ public class Task {
     public void setType(TaskType type) {
         this.taskType = type;
     }
+
+    public LocalDateTime getEndTime() {
+        if (startTime == null) return null;
+        return startTime.plus(Duration.ofMinutes(duration));
+    }
+
+    @Override
+    public int compareTo(Task task) {
+        return Comparator.comparing(Task::getStartTime).thenComparing(Task::getTaskType).compare(this, task);
+    }
+
 }
