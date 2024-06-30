@@ -1,10 +1,11 @@
 package models;
 
+import com.google.gson.reflect.TypeToken;
 import enums.Status;
 import enums.TaskType;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 public class SubTask extends Task {
     private final int epicId; //
@@ -67,6 +68,10 @@ public class SubTask extends Task {
                 ", duration=" + duration +
                 ", startTime=" + startTime +
                 '}';
+    }
+
+    public static class SubtaskListTypeToken extends TypeToken<List<SubTask>> {
+
     }
 }
 

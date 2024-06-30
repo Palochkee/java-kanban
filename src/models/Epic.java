@@ -1,14 +1,12 @@
 package models;
 
-
+import com.google.gson.reflect.TypeToken;
 import enums.Status;
 import enums.TaskType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class Epic extends Task {
 
@@ -98,6 +96,10 @@ public class Epic extends Task {
         if (subtask != super.getId()) {
             subTasksIds.add(subtask);
         }
+    }
+
+    public static class EpicListTypeToken extends TypeToken<List<Epic>> {
+
     }
 }
 
